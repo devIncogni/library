@@ -52,6 +52,13 @@ body {
     --headerColor: #cbd5e1;
 }
 
+#bodyGrid {
+    min-height: 100vh;
+
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
 /* #region Header Styling */
 
 #header {
@@ -95,3 +102,23 @@ body {
 }
 
 /* #endregion Header Styling */
+
+/* #region Main Styling */
+
+
+
+/* #endregion Main Styling */
+
+/* #region Footer Styling */
+
+#footer {
+    background-color: var(--headerColor);
+    text-align: center;
+
+    /* font-size: 0.75rem; */
+    line-height: 1.1;
+
+    padding: 0.5rem 0;
+}
+
+/* #endregion Footer Styling */
