@@ -105,7 +105,26 @@ body {
 
 /* #region Main Styling */
 
+#main {
+    max-width: calc(16rem*4);
+    width: 100%;
+    margin: 3rem auto;
+    border: 1px solid black;
+}
 
+#mainContainer {
+    display: grid;
+    /* grid-auto-flow: column; */
+    grid-auto-rows: 22rem;
+    grid-template-columns: repeat(auto-fit, 16rem);
+    gap: 3rem;
+    justify-content: center;
+}
+
+.card {
+    border: 1px solid black;
+    
+}
 
 /* #endregion Main Styling */
 
