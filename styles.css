@@ -182,3 +182,39 @@ body {
 }
 
 /* #endregion Footer Styling */
+
+/* #region Dialog Styling */
+
+::backdrop {
+    background-color: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(0.25rem);
+}
+
+#addBookForm {
+    margin: auto;
+    border: 3px solid black;
+    padding: 1rem;
+
+    width: 100%;
+    max-width: calc(16rem*3);
+}
+
+fieldset {
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+#bookDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    gap: 1rem;
+}
+
+#bookDetails > div {
+    display: flex;
+    flex-direction: column;
+}
+
+/* #endregion Dialog Styling */
