@@ -73,6 +73,7 @@ body {
 
     /* Slate Color Palette */
     --headerColor: #cbd5e1;
+    --cardColor: #cbd5e1;
 }
 
 #bodyGrid {
@@ -145,9 +146,26 @@ body {
 }
 
 .card {
+    background-color: var(--cardColor);
     border: 1px solid black;
-
 }
+
+#addBooks {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+#addBooks:active {
+    background-color: #e2e8f0;
+}
+
+#addBooks img {
+    user-select: none;
+}
+
 
 /* #endregion Main Styling */
 
