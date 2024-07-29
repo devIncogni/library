@@ -34,11 +34,12 @@ submitBtn.addEventListener("click", (event) => {
       inputRecdArr[3].checked
     );
 
-    addBookToLibrary(newBook);
-    createCard();
+    createCard(myLibrary.length);
     addElementsToCard(myLibrary.length, subDivClasses);
     updateCardContent(myLibrary.length, newBook);
     initCardBtns(myLibrary.length, btnHolderClasses);
+
+    addBookToLibrary(newBook);
 
     addBookDialog.close();
     form.reset();
@@ -93,11 +94,11 @@ const subDivClasses = [
 
 const btnHolderClasses = ["delCard", "toggleRead"];
 
-function createCard() {
+function createCard(dataIndex) {
   let card = document.createElement("div");
 
   card.classList.add("card");
-  card.setAttribute("data-index", myLibrary.length);
+  card.setAttribute("data-index", dataIndex);
 
   mainContainer.appendChild(card);
 }
@@ -222,33 +223,6 @@ function initCardBtns(cardIndex, btnClassList) {
 
 // #region Edit DOM card elements
 
-let deleteBtnArr = [...document.querySelectorAll(".delCard")];
 
-deleteBtnArr.forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    console.log(btn.parentElement.parentElement);
-    btn.parentElement.parentElement.remove();
-  });
-});
-
-let toggleReadBtn = [...document.querySelectorAll(".toggleRead")];
-
-toggleReadBtn.forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    console.log(btn.parentElement.parentElement);
-    let readStatus =
-      btn.parentElement.parentElement.querySelector(
-        ".readingStatus"
-      ).textContent;
-
-    btn.parentElement.parentElement.querySelector(
-      ".readingStatus"
-    ).textContent = readStatus == "Read" ? "Not Read" : "Read";
-    let index = btn.parentElement.parentElement.dataset.index;
-
-    myLibrary[index][hasRead] =
-      myLibrary[index][hasRead] == true ? false : true;
-  });
-});
 
 // #endregion Edit DOM card elements
