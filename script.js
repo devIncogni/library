@@ -64,7 +64,7 @@ const addBookToLibrary = function (bookName) {
   return;
 };
 
-Book.prototype.readToggle = function () {
+Book.prototype.toggleRead = function () {
   if (this.hasRead) {
     this.hasRead = false;
   } else {
@@ -151,12 +151,35 @@ function initCardBtns(cardIndex, btnClassList) {
   toggleRead.textContent =
     readingStatus.textContent == "Read" ? "Mark Unread" : "Mark Read";
 
+  // Appending buttons
+  btnsHolder.textContent = ""; // Cleared btnsHolder div of any children
   btnsHolder.appendChild(delCard);
   btnsHolder.appendChild(toggleRead);
+
+  // Adding event listeners to buttons
+  delCard.addEventListener("click", () => {
+    deleteCard(cardIndex);
+  });
+  toggleRead.addEventListener("click", () => {
+    toggleReadingStatus(cardIndex);
+  });
 }
 
 // #endregion Add DOM card elements
 
 // #region Edit DOM card elements
+
+function deleteCard(cardIndex) {
+  myLibrary.splice(cardIndex, 1);
+  let card = document.querySelector(`div[data-index="${cardIndex}"]`);
+  card.remove();
+}
+
+function toggleReadingStatus(cardIndex) {
+  let book = myLibrary[cardIndex];
+  book.toggleRead();
+  updateCardContent(cardIndex, book);
+  initCardBtns(cardIndex);
+}
 
 // #endregion Edit DOM card elements
