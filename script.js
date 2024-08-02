@@ -1,7 +1,3 @@
-// #region Test
-
-// #endregion Test
-
 // #region Dialog Form Logic
 
 const addBookBtn = document.querySelector("#addBooks");
@@ -115,6 +111,8 @@ function addElementsToCard(cardIndex, classList) {
 }
 
 function updateCardContent(cardIndex, book) {
+  book = book == undefined ? myLibrary[cardIndex] : book;
+
   let card = document.querySelector(`div[data-index="${cardIndex}"]`);
   let subDiv = [...card.children];
   let i = 0;
@@ -185,9 +183,11 @@ function toggleReadingStatus(cardIndex) {
 
 function renumDataIndex() {
   let cardsArr = [...document.querySelectorAll("div.card")];
+  cardsArr.splice(0, 1);
 
-  for (let i = -1; i < cardsArr.length - 1; i++) {
+  for (let i = 0; i < cardsArr.length; i++) {
     cardsArr[i].setAttribute("data-index", i);
+    initCardBtns(i);
   }
 }
 
