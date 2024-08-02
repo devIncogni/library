@@ -173,6 +173,7 @@ function deleteCard(cardIndex) {
   myLibrary.splice(cardIndex, 1);
   let card = document.querySelector(`div[data-index="${cardIndex}"]`);
   card.remove();
+  renumDataIndex();
 }
 
 function toggleReadingStatus(cardIndex) {
@@ -180,6 +181,14 @@ function toggleReadingStatus(cardIndex) {
   book.toggleRead();
   updateCardContent(cardIndex, book);
   initCardBtns(cardIndex);
+}
+
+function renumDataIndex() {
+  let cardsArr = [...document.querySelectorAll("div.card")];
+
+  for (let i = -1; i < cardsArr.length - 1; i++) {
+    cardsArr[i].setAttribute("data-index", i);
+  }
 }
 
 // #endregion Edit DOM card elements
