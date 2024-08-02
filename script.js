@@ -5,12 +5,12 @@
 // #region Dialog Form Logic
 
 const addBookBtn = document.querySelector("#addBooks");
+const addBookDialog = document.querySelector("#addBookForm");
 
 addBookBtn.addEventListener("click", (event) => {
   addBookDialog.showModal();
 });
 
-const addBookDialog = document.querySelector("#addBookForm");
 const form = document.querySelector("#addBookForm > form");
 const closeBtn = document.querySelector("#close");
 const submitBtn = document.querySelector("#submit");
@@ -91,7 +91,6 @@ const subDivClasses = [
   "readingStatus",
   "btnsHolder",
 ];
-
 const btnHolderClasses = ["delCard", "toggleRead"];
 
 function createCard(dataIndex) {
@@ -129,7 +128,8 @@ function updateCardContent(cardIndex, book) {
       }
 
       if (key == "hasRead") {
-        subDiv[i].textContent = book[key] == "true" ? "Read" : "Not Read";
+        subDiv[i].textContent =
+          book[key].toString() == "true" ? "Read" : "Not Read";
       }
 
       i++;
@@ -140,7 +140,7 @@ function updateCardContent(cardIndex, book) {
 function initCardBtns(cardIndex, btnClassList) {
   let card = document.querySelector(`div[data-index = "${cardIndex}"]`);
   let btnsHolder = card.querySelector(".btnsHolder");
-  let readStatus = card.querySelector(".readingStatus");
+  let readingStatus = card.querySelector(".readingStatus");
 
   let delCard = document.createElement("div");
   delCard.classList.add("delCard");
@@ -149,80 +149,14 @@ function initCardBtns(cardIndex, btnClassList) {
   let toggleRead = document.createElement("div");
   toggleRead.classList.add("toggleRead");
   toggleRead.textContent =
-    readStatus.textContent == "Read" ? "Mark Unread" : "Mark Read";
+    readingStatus.textContent == "Read" ? "Mark Unread" : "Mark Read";
 
   btnsHolder.appendChild(delCard);
   btnsHolder.appendChild(toggleRead);
 }
 
-// function createCard() {
-//   let card = document.createElement("div");
-//   card.classList.add("card");
-//   card.setAttribute("data-index", myLibrary.length - 1);
-
-//   let divList = createDiv([
-//     "titleHolder",
-//     "authorHolder",
-//     "pageNumber",
-//     "readingStatus",
-//     "btnsHolder",
-//   ]);
-
-//   giveContent(divList, myLibrary.length - 1);
-
-//   let btnDivList = createDiv(["delCard", "toggleRead"]);
-//   btnDivList[0].textContent = "Delete";
-
-//   if (divList[3].textContent == "false") {
-//     btnDivList[1].textContent = "Mark Read";
-//     divList[3].textContent = "Not Read";
-//   } else {
-//     btnDivList[1].textContent = "Didn't Read";
-//     divList[3].textContent = "Read";
-//   }
-
-//   btnDivList.forEach((element) => {
-//     divList[divList.length - 1].appendChild(element);
-//   });
-
-//   divList.forEach((element) => {
-//     card.appendChild(element);
-//   });
-
-//   mainContainer.appendChild(card);
-// }
-
-// function createDiv(classNameArray) {
-//   let divElement = [];
-//   let cardChild;
-//   for (let i = 0; i < classNameArray.length; i++) {
-//     cardChild = document.createElement("div");
-//     cardChild.classList.add(classNameArray[i]);
-
-//     divElement.push(cardChild);
-//   }
-
-//   return divElement;
-//   // document.createElement('div');
-// }
-
-// function giveContent(divList, index) {
-//   let j = 0;
-//   for (const key in myLibrary[index]) {
-//     if (Object.hasOwnProperty.call(myLibrary[index], key)) {
-//       divList[j].textContent = myLibrary[index][key];
-//       if (j == 2) {
-//         divList[j].textContent += " Pages";
-//       }
-//       j++;
-//     }
-//   }
-// }
-
 // #endregion Add DOM card elements
 
 // #region Edit DOM card elements
-
-
 
 // #endregion Edit DOM card elements
