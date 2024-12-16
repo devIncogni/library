@@ -122,3 +122,23 @@ body {
 }
 
 /* #endregion HEADER/NAVBAR STYLING */
+
+/* #region MAIN CONTENT STYLING */
+
+.mainContent{
+    display: grid;
+    margin: auto;
+    max-width: 80%;
+
+    grid-template-columns: repeat(auto-fit, 16rem);
+    grid-auto-rows: 22rem;
+    gap: 2rem;
+    align-content: center;
+    
+}
+
+.mainContent > div {
+    border: 1px solid black;
+}
+
+/* #endregion MAIN CONTENT STYLING */
