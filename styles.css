@@ -154,6 +154,8 @@ ul {
 /* #region MAIN CONTENT AND CARD STYLING */
 
 .mainContent {
+
+    padding: 2rem 0;
     display: grid;
     margin: auto;
     max-width: 80%;
@@ -165,14 +167,14 @@ ul {
 
 }
 
-#addBook{
+#addBook {
     border: 1px solid black;
     display: flex;
     justify-content: center;
     cursor: pointer;
 }
 
-#addBook > img {
+#addBook>img {
     user-select: none;
     width: 25%;
 }
@@ -193,7 +195,7 @@ ul {
     width: 80%;
     white-space: nowrap;
     overflow-x: scroll;
-    
+
     font-size: 1rem;
     text-align: center;
 }
@@ -226,7 +228,7 @@ ul {
     gap: 0.5rem;
 }
 
-.bookBtns > div {
+.bookBtns>div {
     border: 1px solid red;
     width: 100%;
     text-align: center;
@@ -241,14 +243,42 @@ dialog {
     max-width: calc(16rem*3);
 }
 
-dialog > form {
+/* Dialog form styling */
+
+.dialogForm {
     font-size: 1.1rem;
 }
 
-fieldset {
+.dialogForm fieldset {
     margin: 1rem;
     padding: 1rem;
 }
+
+.dialogForm legend {
+    font-size: 1.25rem
+}
+
+
+#bookField>ul>li {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+#buttonField {
+    border: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+#buttonField>button {
+    padding: 0.125rem;
+}
+
+
+/* Dialog form styling */
 
 ::backdrop {
     background-color: rgba(0, 0, 0, 0.75);

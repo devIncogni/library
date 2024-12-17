@@ -10,9 +10,9 @@
 </head>
 
 <body>
-    <dialog>
-        <form method="dialog">
-            <fieldset>
+    <dialog open>
+        <form class="dialogForm" method="dialog">
+            <fieldset id="bookField">
                 <legend>Book Details</legend>
                 <ul>
                     <li>
@@ -42,14 +42,10 @@
                     </li>
                 </ul>
             </fieldset>
-            <fieldset>
-                <ul>
-                    <li>
-                        <button id="submit">Submit</button>
-                        <button id="close">Close</button>
-                        <button id="reset">Reset</button>
-                    </li>
-                </ul>
+            <fieldset id="buttonField">
+                <button id="submit">Submit</button>
+                <button id="close">Close</button>
+                <button id="reset">Reset</button>
             </fieldset>
         </form>
     </dialog>
