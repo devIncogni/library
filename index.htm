@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TrackBook | Keep track of your books on the go</title>
     <link rel="stylesheet" href="./styles.css">
-    <script src="./script.js"></script>
+    <script src="./script.js" defer></script>
 </head>
 
 <body>
-    <dialog open>
+    <dialog>
         <form method="dialog">
             <fieldset>
                 <legend>Book Details</legend>
@@ -37,7 +37,7 @@
                         <label for="read">Read</label>
                     </li>
                     <li>
-                        <input required type="radio" name="read" id="unread" value="unread">
+                        <input required type="radio" name="read" id="unread" value="unread" checked>
                         <label for="unread">Not Read</label>
                     </li>
                 </ul>
@@ -45,9 +45,9 @@
             <fieldset>
                 <ul>
                     <li>
-                        <button>Submit</button>
-                        <button>Close</button>
-                        <button>Reset</button>
+                        <button id="submit">Submit</button>
+                        <button id="close">Close</button>
+                        <button id="reset">Reset</button>
                     </li>
                 </ul>
             </fieldset>
@@ -79,14 +79,18 @@
 
     <div class="mainContent">
 
-        <div class="books" id="addBook">
-            <p>+</p>
-            <p>Add Books</p>
+        <div id="addBook">
+            <img src="./assets/add.svg">
         </div>
         <div class="books" id="book_0">
-            <p>Name: HP</p>
-            <p>Author: JK</p>
-            <p>Pages: 500</p>
+            <p class="bookTitle">HPasdasdasdasdasdasdasdasdassdads</p>
+            <p class="authorName">JK</p>
+            <p class="pageNumber">Pages: 500</p>
+            <p class="readStatus">Read</p>
+            <div class="bookBtns">
+                <div>Delete</div>
+                <div>Mark Read</div>
+            </div>
         </div>
     </div>
 
