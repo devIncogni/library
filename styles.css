@@ -236,14 +236,16 @@ ul {
     border-radius: 0.5rem;
 }
 
+/* #endregion MAIN CONTENT AND CARD STYLING */
+
+/* #region DIALOG STYLING */
+
 dialog {
     margin: auto;
     padding: 1rem;
     width: 100%;
     max-width: calc(16rem*3);
 }
-
-/* Dialog form styling */
 
 .dialogForm {
     font-size: 1.1rem;
@@ -278,12 +280,9 @@ dialog {
 }
 
 
-/* Dialog form styling */
-
 ::backdrop {
     background-color: rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(0.25rem);
-    /* width: 100%; */
 }
 
-/* #endregion MAIN CONTENT STYLING */
+/* #endregion DIALOG STYLING */
