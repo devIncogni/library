@@ -37,6 +37,7 @@ function extreactDataFromForm(form) {
 
 const closeBtn = document.querySelector("#close");
 const openBtn = document.querySelector("#addBook");
+const openBtnHeader = document.querySelector("#addBookHeader");
 const subBtn = document.querySelector("#submit");
 const resetBtn = document.querySelector("#resetBtn");
 
@@ -47,6 +48,11 @@ closeBtn.addEventListener("click", (event) => {
 });
 
 openBtn.addEventListener("click", (event) => {
+  const dialog = document.querySelector("dialog");
+  openDialogModal(dialog);
+});
+
+openBtnHeader.addEventListener("click", (event) => {
   const dialog = document.querySelector("dialog");
   openDialogModal(dialog);
 });
@@ -71,9 +77,12 @@ subBtn.addEventListener("click", () => {
   );
 
   console.log(bookData);
-
   clearAllCards();
   makeAllCards();
+
+  resetForm(document.querySelector(".dialogForm"));
+  const dialog = document.querySelector("dialog");
+  closeDialogModal(dialog);
 });
 
 // #endregion Dialog functionality

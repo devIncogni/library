@@ -226,6 +226,8 @@ ul {
     grid-template-columns: 1fr 1fr;
     min-width: 80%;
     gap: 0.5rem;
+    cursor: pointer;
+    user-select: none;
 }
 
 .bookBtns>div {
@@ -277,6 +279,7 @@ dialog {
 
 #buttonField>button {
     padding: 0.125rem;
+    user-select: none;
 }
 
 
@@ -286,3 +289,10 @@ dialog {
 }
 
 /* #endregion DIALOG STYLING */
+
+/* #region FOOTER STYLING */
+.footer {
+    display: flex;
+    justify-content: center;
+}
+/* #endregion FOOTER STYLING */
