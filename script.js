@@ -173,32 +173,93 @@ function makeAllCards() {
 // #endregion Book Card functionality
 
 class Library {
-  #bookLib = [];
+  #_bookLib = [];
 
   addBookToLib(Book) {
-    this.#bookLib.push(Book);
+    this.bookLib.push(Book);
   }
 
   removeBookAtIndex(i) {
-    this.#bookLib.splice(i, 1);
+    this.bookLib.splice(i, 1);
   }
 
   get bookLib() {
-    return this.#bookLib;
+    return this.#_bookLib;
   }
 }
 
-class Book {
-  #name;
-  #author;
-  #pages;
-  #readStatus;
+class Booka {
+  #_name;
+  #_author;
+  #_pages;
+  #_readStatus;
 
   constructor(name, author, pages, readStatus) {
-    super();
-    this.#name = name;
-    this.#author = author;
-    this.#pages = pages;
-    this.#readStatus = readStatus;
+    this.name = name;
+    this.author = author;
+    this.pages = pages;
+    this.readStatus = readStatus;
+  }
+
+  get name() {
+    return this.#_name;
+  }
+
+  get author() {
+    return this.#_author;
+  }
+
+  get pages() {
+    return this.#_pages;
+  }
+
+  get readStatus() {
+    return this.#_readStatus;
+  }
+}
+
+class DialogBox {
+  constructor(dialogBody, openButtons = [], closeButtons = []) {
+    this.dialogBody = dialogBody;
+    this.openButtons = openButtons;
+    this.closeButtons = closeButtons;
+  }
+
+  initialise() {
+    this.openButtons.forEach((openButton) => {
+      openButton.addEventListener("click", () => this.openDialog);
+    });
+
+    this.closeButtons.forEach((closeButton) => {
+      closeButton.addEventListener("click", () => this.closeDialog);
+    });
+  }
+
+  openDialog() {
+    console.log(this);
+    this.dialogBody.showModal();
+  }
+
+  closeDialog() {
+    this.dialogBody.close();
+  }
+}
+
+class Form {
+  constructor(formBody) {
+    this.formBody = formBody;
+    this.submitButtons = [...formBody.querySelectorAll("#submit")];
+    this.resetButtons = [...formBody.querySelectorAll("#resetBtn")];
+    this.inputFields = [...formBody.querySelectorAll("input")];
+  }
+
+  getTypeOfInputs(inputType) {
+    let typeInputFields = [];
+    this.inputFields.forEach((field) => {
+      if (field.getAttribute("type") == inputType) {
+        textInputFields.push(field);
+      }
+    });
+    return typeInputFields;
   }
 }
