@@ -171,3 +171,34 @@ function makeAllCards() {
 }
 
 // #endregion Book Card functionality
+
+class Library {
+  #bookLib = [];
+
+  addBookToLib(Book) {
+    this.#bookLib.push(Book);
+  }
+
+  removeBookAtIndex(i) {
+    this.#bookLib.splice(i, 1);
+  }
+
+  get bookLib() {
+    return this.#bookLib;
+  }
+}
+
+class Book {
+  #name;
+  #author;
+  #pages;
+  #readStatus;
+
+  constructor(name, author, pages, readStatus) {
+    super();
+    this.#name = name;
+    this.#author = author;
+    this.#pages = pages;
+    this.#readStatus = readStatus;
+  }
+}
