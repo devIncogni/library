@@ -225,15 +225,15 @@ class DialogBox {
     this.closeButtons = closeButtons;
   }
 
-  initialise() {
-    this.openButtons.forEach((openButton) => {
-      openButton.addEventListener("click", () => this.openDialog);
-    });
+  // initialise() {
+  //   this.openButtons.forEach((openButton) => {
+  //     openButton.addEventListener("click", () => this.openDialog);
+  //   });
 
-    this.closeButtons.forEach((closeButton) => {
-      closeButton.addEventListener("click", () => this.closeDialog);
-    });
-  }
+  //   this.closeButtons.forEach((closeButton) => {
+  //     closeButton.addEventListener("click", () => this.closeDialog);
+  //   });
+  // }
 
   openDialog() {
     console.log(this);
@@ -248,8 +248,6 @@ class DialogBox {
 class Form {
   constructor(formBody) {
     this.formBody = formBody;
-    this.submitButtons = [...formBody.querySelectorAll("#submit")];
-    this.resetButtons = [...formBody.querySelectorAll("#resetBtn")];
     this.inputFields = [...formBody.querySelectorAll("input")];
   }
 
@@ -257,9 +255,39 @@ class Form {
     let typeInputFields = [];
     this.inputFields.forEach((field) => {
       if (field.getAttribute("type") == inputType) {
-        textInputFields.push(field);
+        typeInputFields.push(field);
       }
     });
     return typeInputFields;
+  }
+
+  resetForm() {
+    this.formBody.reset();
+  }
+
+  isValidForm() {
+    this.formBody.reportValidity();
+  }
+
+  get formData() {
+    let formDataObj = {};
+    for (let i = 0; i < this.inputFields.length; i++) {
+      if (
+        this.inputFields[i].name in formDataObj &&
+        !this.inputFields[i].checked
+      ) {
+        continue;
+      } else {
+        formDataObj[this.inputFields[i].name] = this.inputFields[i].value;
+      }
+    }
+    return formDataObj;
+  }
+}
+
+class DialogFormEventsService {
+  constructor(FormElement) {
+    this.formBody.submitButtons = [...formBody.querySelectorAll("#submit")];
+    this.formBody.resetButtons = [...formBody.querySelectorAll("#resetBtn")];
   }
 }
