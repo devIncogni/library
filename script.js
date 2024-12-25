@@ -1,179 +1,8 @@
-const bookLib = [];
-
-function Book(name, author, pages, readStatus) {
-  this.bookTitle = name;
-  this.authorName = author;
-  this.pageNumber = pages;
-  this.readStatus = readStatus;
-}
-
-function addBookToLib(name, author, pages, readStatus) {
-  bookLib.push(new Book(name, author, pages, readStatus));
-}
-
-// #region Dialog functionality
-
-function openDialogModal(dialog) {
-  dialog.showModal();
-}
-
-function closeDialogModal(dialog) {
-  dialog.close();
-}
-
-function resetForm(form) {
-  form.reset();
-}
-
-function extreactDataFromForm(form) {
-  let bookName = form.querySelector("#bookName").value;
-  let authorName = form.querySelector("#authorName").value;
-  let pageNum = form.querySelector("#pageNum").value;
-  let readStatus =
-    form.querySelector("#read").checked == true ? "Read" : "Not Read";
-
-  return { bookName, authorName, pageNum, readStatus };
-}
-
-const closeBtn = document.querySelector("#close");
-const openBtn = document.querySelector("#addBook");
-const openBtnHeader = document.querySelector("#addBookHeader");
-const subBtn = document.querySelector("#submit");
-const resetBtn = document.querySelector("#resetBtn");
-
-closeBtn.addEventListener("click", (event) => {
-  const dialog = document.querySelector("dialog");
-  event.preventDefault();
-  closeDialogModal(dialog);
-});
-
-openBtn.addEventListener("click", (event) => {
-  const dialog = document.querySelector("dialog");
-  openDialogModal(dialog);
-});
-
-openBtnHeader.addEventListener("click", (event) => {
-  const dialog = document.querySelector("dialog");
-  openDialogModal(dialog);
-});
-
-resetBtn.addEventListener("click", (event) => {
-  event.preventDefault();
-  resetForm(document.querySelector(".dialogForm"));
-});
-
-subBtn.addEventListener("click", () => {
-  let form = document.querySelector(".dialogForm");
-  if (form.reportValidity() == false) {
-    return;
-  }
-  let bookData = extreactDataFromForm(document);
-
-  addBookToLib(
-    bookData.bookName,
-    bookData.authorName,
-    bookData.pageNum,
-    bookData.readStatus
-  );
-
-  console.log(bookData);
-  clearAllCards();
-  makeAllCards();
-
-  resetForm(document.querySelector(".dialogForm"));
-  const dialog = document.querySelector("dialog");
-  closeDialogModal(dialog);
-});
-
-// #endregion Dialog functionality
-
-// #region Book Card functionality
-
-function createBookCards(bookIndex) {
-  const mainContentdiv = document.querySelector(".mainContent");
-  const div = document.createElement("div");
-  div.setAttribute("class", "books");
-  div.setAttribute("data-booknumber", bookIndex);
-  mainContentdiv.appendChild(div);
-
-  for (const key in bookLib[bookIndex]) {
-    let p = document.createElement("p");
-    p.setAttribute("class", key);
-
-    if (key == "pageNumber") {
-      p.textContent = "Pages: " + bookLib[bookIndex][key];
-    } else {
-      p.textContent = bookLib[bookIndex][key];
-    }
-    div.appendChild(p);
-  }
-
-  const bookBtn = document.createElement("div");
-  const delbook = document.createElement("div");
-  const toggleRead = document.createElement("div");
-
-  bookBtn.setAttribute("class", "bookBtns");
-  delbook.setAttribute("id", "deleteBook");
-  delbook.textContent = "Delete";
-  toggleRead.setAttribute("id", "toggleRead");
-  toggleRead.textContent = "Toggle Read";
-
-  bookBtn.appendChild(delbook);
-  bookBtn.appendChild(toggleRead);
-  div.appendChild(bookBtn);
-}
-
-function initialiseBookCards() {
-  books = [...document.querySelectorAll(".books")];
-  books.forEach((book) => {
-    let deleteBtn = book.querySelector("#deleteBook");
-    let readBtn = book.querySelector("#toggleRead");
-    let bookIndex = book.getAttribute("data-booknumber");
-
-    deleteBtn.addEventListener("click", (event) => {
-      deleteBook(bookIndex);
-    });
-
-    readBtn.addEventListener("click", (event) => {
-      toggleRead(bookIndex);
-    });
-  });
-}
-
-function deleteBook(bookIndex) {
-  bookLib.splice(bookIndex, 1);
-  clearAllCards();
-  makeAllCards();
-}
-
-function toggleRead(bookIndex) {
-  bookLib[bookIndex].readStatus =
-    bookLib[bookIndex].readStatus == "Read" ? "Not Read" : "Read";
-  clearAllCards();
-  makeAllCards();
-}
-
-function clearAllCards() {
-  let mainContent = document.querySelector(".mainContent");
-  let books = [...document.querySelectorAll(".books")];
-  books.forEach((book) => {
-    mainContent.removeChild(book);
-  });
-}
-
-function makeAllCards() {
-  let i = 0;
-  bookLib.forEach((book) => {
-    createBookCards(i);
-    initialiseBookCards();
-    i++;
-  });
-}
-
-// #endregion Book Card functionality
-
 class Library {
-  #_bookLib = [];
+  // #_bookLib = [];
+  constructor() {
+    this.bookLib = [];
+  }
 
   addBookToLib(Book) {
     this.bookLib.push(Book);
@@ -181,14 +10,6 @@ class Library {
 
   removeBookAtIndex(i) {
     this.bookLib.splice(i, 1);
-  }
-
-  get bookLib() {
-    return this.#_bookLib;
-  }
-
-  set bookLib(bookLib) {
-    this.#_bookLib = bookLib;
   }
 }
 
@@ -199,24 +20,31 @@ class Booka {
     this.pageNumber = pages;
     this.readStatus = readStatus;
   }
+
+  toggleRead() {
+    this.readStatus = this.readStatus == "Read" ? "Not Read" : "Read";
+  }
 }
 
 class DialogBox {
-  constructor(dialogBody, openButtons = [], closeButtons = []) {
+  constructor(dialogBody, openButtons, closeButtons) {
     this.dialogBody = dialogBody;
-    this.openButtons = openButtons;
-    this.closeButtons = closeButtons;
+    this.openButtons = [...openButtons];
+    this.closeButtons = [...closeButtons];
+
+    this.initialise();
   }
 
-  // initialise() {
-  //   this.openButtons.forEach((openButton) => {
-  //     openButton.addEventListener("click", () => this.openDialog);
-  //   });
+  initialise() {
+    this.openButtons.forEach((openButton) => {
+      openButton.addEventListener("click", () => this.openDialog());
+      console.log("adsad");
+    });
 
-  //   this.closeButtons.forEach((closeButton) => {
-  //     closeButton.addEventListener("click", () => this.closeDialog);
-  //   });
-  // }
+    this.closeButtons.forEach((closeButton) => {
+      closeButton.addEventListener("click", () => this.closeDialog());
+    });
+  }
 
   openDialog() {
     console.log(this);
@@ -234,22 +62,12 @@ class Form {
     this.inputFields = [...formBody.querySelectorAll("input")];
   }
 
-  getTypeOfInputs(inputType) {
-    let typeInputFields = [];
-    this.inputFields.forEach((field) => {
-      if (field.getAttribute("type") == inputType) {
-        typeInputFields.push(field);
-      }
-    });
-    return typeInputFields;
-  }
-
   resetForm() {
     this.formBody.reset();
   }
 
   isValidForm() {
-    this.formBody.reportValidity();
+    return this.formBody.reportValidity();
   }
 
   get formData() {
@@ -292,9 +110,10 @@ class DialogFormEventsService {
     this.submitButtons.forEach((submitButton) => {
       submitButton.addEventListener("click", (e) => {
         e.preventDefault();
-        if (!this.FormElement.isValidForm) {
+        if (!this.FormElement.isValidForm()) {
           return;
         }
+
         this.DialogBoxElement.closeDialog();
 
         this.LibraryElement.addBookToLib(
@@ -305,17 +124,24 @@ class DialogFormEventsService {
             this.FormElement.formData.read
           )
         );
+        LDDS.renderDisplay();
+        this.FormElement.resetForm();
+
         return this.FormElement.formData;
       });
     });
   }
+
+  // addEventsTo
 }
 
-class CardCreationService {
-  constructor(Book, index) {
+class CardEventsService {
+  constructor(Book, index, LibraryElement) {
     this.Book = Book;
     this.bookIndex = index;
+    this.LibraryElement = LibraryElement;
     this.createCard();
+    this.initialiseCard();
   }
 
   createCard() {
@@ -350,13 +176,60 @@ class CardCreationService {
     bookBtn.appendChild(delbook);
     bookBtn.appendChild(toggleRead);
     div.appendChild(bookBtn);
+
+    return div;
+  }
+
+  initialiseCard() {
+    let book = document.querySelector(
+      `div[data-booknumber="${this.bookIndex}"`
+    );
+
+    let deleteBtn = book.querySelector("#deleteBook");
+    let readBtn = book.querySelector("#toggleRead");
+    let bookIndex = book.getAttribute("data-booknumber");
+
+    deleteBtn.addEventListener("click", (event) => {
+      this.LibraryElement.removeBookAtIndex(this.bookIndex);
+      LDDS.renderDisplay();
+    });
+
+    readBtn.addEventListener("click", (event) => {
+      this.Book.toggleRead();
+      LDDS.renderDisplay();
+      // console.log(this.Book);
+    });
   }
 }
 
 class LibraryDOMDisplayService {
   constructor(LibraryElement) {
     this.LibraryElement = LibraryElement;
+  }
 
-    LibraryElement.bookLib;
+  renderDisplay() {
+    this.clearAllCards();
+    let i = 0;
+    this.LibraryElement.bookLib.forEach((book) => {
+      new CardEventsService(book, i++, this.LibraryElement);
+    });
+  }
+
+  clearAllCards() {
+    let mainContent = document.querySelector(".mainContent");
+    let books = [...document.querySelectorAll(".books")];
+    books.forEach((book) => {
+      mainContent.removeChild(book);
+    });
   }
 }
+
+const Lib = new Library();
+const dialogForm = new Form(document.querySelector(".dialogForm"));
+const dialogBox = new DialogBox(
+  document.querySelector("dialog"),
+  [...document.querySelectorAll(".openDialog")],
+  [document.querySelector("#close")]
+);
+const DFES = new DialogFormEventsService(dialogForm, dialogBox, Lib);
+const LDDS = new LibraryDOMDisplayService(Lib);
