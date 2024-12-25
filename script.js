@@ -186,35 +186,18 @@ class Library {
   get bookLib() {
     return this.#_bookLib;
   }
+
+  set bookLib(bookLib) {
+    this.#_bookLib = bookLib;
+  }
 }
 
 class Booka {
-  #_name;
-  #_author;
-  #_pages;
-  #_readStatus;
-
   constructor(name, author, pages, readStatus) {
-    this.name = name;
-    this.author = author;
-    this.pages = pages;
+    this.bookTitle = name;
+    this.authorName = author;
+    this.pageNumber = pages;
     this.readStatus = readStatus;
-  }
-
-  get name() {
-    return this.#_name;
-  }
-
-  get author() {
-    return this.#_author;
-  }
-
-  get pages() {
-    return this.#_pages;
-  }
-
-  get readStatus() {
-    return this.#_readStatus;
   }
 }
 
@@ -286,8 +269,94 @@ class Form {
 }
 
 class DialogFormEventsService {
-  constructor(FormElement) {
-    this.formBody.submitButtons = [...formBody.querySelectorAll("#submit")];
-    this.formBody.resetButtons = [...formBody.querySelectorAll("#resetBtn")];
+  constructor(FormElement, DialogBoxElement, LibraryElement) {
+    this.LibraryElement = LibraryElement;
+    this.DialogBoxElement = DialogBoxElement;
+    this.FormElement = FormElement;
+    this.submitButtons = [...FormElement.formBody.querySelectorAll("#submit")];
+    this.resetButtons = [...FormElement.formBody.querySelectorAll("#resetBtn")];
+
+    this.addEventsToReset();
+    this.addEventsToSubmit();
+  }
+
+  addEventsToReset() {
+    this.resetButtons.forEach((resetButton) => {
+      resetButton.addEventListener("click", () => {
+        this.FormElement.resetForm();
+      });
+    });
+  }
+
+  addEventsToSubmit() {
+    this.submitButtons.forEach((submitButton) => {
+      submitButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (!this.FormElement.isValidForm) {
+          return;
+        }
+        this.DialogBoxElement.closeDialog();
+
+        this.LibraryElement.addBookToLib(
+          new Booka(
+            this.FormElement.formData.bookName,
+            this.FormElement.formData.authorName,
+            this.FormElement.formData.pageNum,
+            this.FormElement.formData.read
+          )
+        );
+        return this.FormElement.formData;
+      });
+    });
+  }
+}
+
+class CardCreationService {
+  constructor(Book, index) {
+    this.Book = Book;
+    this.bookIndex = index;
+    this.createCard();
+  }
+
+  createCard() {
+    const mainContentdiv = document.querySelector(".mainContent");
+    const div = document.createElement("div");
+    div.setAttribute("class", "books");
+    div.setAttribute("data-booknumber", this.bookIndex);
+    mainContentdiv.appendChild(div);
+
+    for (const key in this.Book) {
+      let p = document.createElement("p");
+      p.setAttribute("class", key);
+
+      if (key == "pageNumber") {
+        p.textContent = "Pages: " + this.Book[key];
+      } else {
+        p.textContent = this.Book[key];
+      }
+      div.appendChild(p);
+    }
+
+    const bookBtn = document.createElement("div");
+    const delbook = document.createElement("div");
+    const toggleRead = document.createElement("div");
+
+    bookBtn.setAttribute("class", "bookBtns");
+    delbook.setAttribute("id", "deleteBook");
+    delbook.textContent = "Delete";
+    toggleRead.setAttribute("id", "toggleRead");
+    toggleRead.textContent = "Toggle Read";
+
+    bookBtn.appendChild(delbook);
+    bookBtn.appendChild(toggleRead);
+    div.appendChild(bookBtn);
+  }
+}
+
+class LibraryDOMDisplayService {
+  constructor(LibraryElement) {
+    this.LibraryElement = LibraryElement;
+
+    LibraryElement.bookLib;
   }
 }
