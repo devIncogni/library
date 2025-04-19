@@ -134,6 +134,7 @@ class DialogFormEventsService {
             )
           );
           LDDS.renderDisplay();
+          this.DialogBoxElement.closeDialog();
           this.FormElement.resetForm();
 
           return this.FormElement.formData;
@@ -249,30 +250,38 @@ const customValidation = (function () {
   const authorNameInput = document.querySelector("#authorName");
   const pageNumInput = document.querySelector("#pageNum");
 
+  const bookNameErr = document.querySelector(".bookNameErr");
+  const authorNameErr = document.querySelector(".authorNameErr");
+  const pageNumErr = document.querySelector(".pageNumErr");
+
   const validateBookName = () => {
     if (bookNameInput.validity.valueMissing) {
       bookNameInput.setCustomValidity("Please Specify Book Name");
-
+      bookNameErr.style.display = "block";
       return false;
     }
     bookNameInput.setCustomValidity("");
+    bookNameErr.style.display = "none";
     return true;
   };
   const validateAuthorName = () => {
     if (authorNameInput.validity.valueMissing) {
       authorNameInput.setCustomValidity("Please Specify Author Name");
-
+      authorNameErr.style.display = "block";
       return false;
     }
     authorNameInput.setCustomValidity("");
+    authorNameErr.style.display = "none";
     return true;
   };
   const validatePageNum = () => {
     if (pageNumInput.validity.valueMissing) {
       pageNumInput.setCustomValidity("Please Specify Page Numbers");
+      pageNumErr.style.display = "block";
       return false;
     }
     pageNumInput.setCustomValidity("");
+    pageNumErr.style.display = "none";
     return true;
   };
 
