@@ -42,7 +42,10 @@ class DialogBox {
     });
 
     this.closeButtons.forEach((closeButton) => {
-      closeButton.addEventListener("click", () => this.closeDialog());
+      closeButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        this.closeDialog();
+      });
     });
   }
 
@@ -100,7 +103,8 @@ class DialogFormEventsService {
 
   addEventsToReset() {
     this.resetButtons.forEach((resetButton) => {
-      resetButton.addEventListener("click", () => {
+      resetButton.addEventListener("click", (e) => {
+        e.preventDefault();
         this.FormElement.resetForm();
       });
     });
@@ -109,25 +113,31 @@ class DialogFormEventsService {
   addEventsToSubmit() {
     this.submitButtons.forEach((submitButton) => {
       submitButton.addEventListener("click", (e) => {
-        // e.preventDefault();
+        e.preventDefault();
         // if (!this.FormElement.isValidForm()) {
         //   return;
         // }
 
         // this.DialogBoxElement.closeDialog();
 
-        this.LibraryElement.addBookToLib(
-          new Booka(
-            this.FormElement.formData.bookName,
-            this.FormElement.formData.authorName,
-            this.FormElement.formData.pageNum,
-            this.FormElement.formData.read
-          )
-        );
-        LDDS.renderDisplay();
-        this.FormElement.resetForm();
+        if (
+          customValidation.validateBookName() &&
+          customValidation.validateAuthorName() &&
+          customValidation.validatePageNum()
+        ) {
+          this.LibraryElement.addBookToLib(
+            new Booka(
+              this.FormElement.formData.bookName,
+              this.FormElement.formData.authorName,
+              this.FormElement.formData.pageNum,
+              this.FormElement.formData.read
+            )
+          );
+          LDDS.renderDisplay();
+          this.FormElement.resetForm();
 
-        return this.FormElement.formData;
+          return this.FormElement.formData;
+        }
       });
     });
   }
@@ -242,6 +252,7 @@ const customValidation = (function () {
   const validateBookName = () => {
     if (bookNameInput.validity.valueMissing) {
       bookNameInput.setCustomValidity("Please Specify Book Name");
+
       return false;
     }
     bookNameInput.setCustomValidity("");
@@ -250,6 +261,7 @@ const customValidation = (function () {
   const validateAuthorName = () => {
     if (authorNameInput.validity.valueMissing) {
       authorNameInput.setCustomValidity("Please Specify Author Name");
+
       return false;
     }
     authorNameInput.setCustomValidity("");
