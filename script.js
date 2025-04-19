@@ -109,12 +109,12 @@ class DialogFormEventsService {
   addEventsToSubmit() {
     this.submitButtons.forEach((submitButton) => {
       submitButton.addEventListener("click", (e) => {
-        e.preventDefault();
-        if (!this.FormElement.isValidForm()) {
-          return;
-        }
+        // e.preventDefault();
+        // if (!this.FormElement.isValidForm()) {
+        //   return;
+        // }
 
-        this.DialogBoxElement.closeDialog();
+        // this.DialogBoxElement.closeDialog();
 
         this.LibraryElement.addBookToLib(
           new Booka(
@@ -233,3 +233,36 @@ const dialogBox = new DialogBox(
 );
 const DFES = new DialogFormEventsService(dialogForm, dialogBox, Lib);
 const LDDS = new LibraryDOMDisplayService(Lib);
+
+const customValidation = (function () {
+  const bookNameInput = document.querySelector("input#bookName");
+  const authorNameInput = document.querySelector("#authorName");
+  const pageNumInput = document.querySelector("#pageNum");
+
+  const validateBookName = () => {
+    if (bookNameInput.validity.valueMissing) {
+      bookNameInput.setCustomValidity("Please Specify Book Name");
+      return false;
+    }
+    bookNameInput.setCustomValidity("");
+    return true;
+  };
+  const validateAuthorName = () => {
+    if (authorNameInput.validity.valueMissing) {
+      authorNameInput.setCustomValidity("Please Specify Author Name");
+      return false;
+    }
+    authorNameInput.setCustomValidity("");
+    return true;
+  };
+  const validatePageNum = () => {
+    if (pageNumInput.validity.valueMissing) {
+      pageNumInput.setCustomValidity("Please Specify Page Numbers");
+      return false;
+    }
+    pageNumInput.setCustomValidity("");
+    return true;
+  };
+
+  return { validateBookName, validateAuthorName, validatePageNum };
+})();
